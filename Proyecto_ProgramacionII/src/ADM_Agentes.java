@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -109,8 +110,18 @@ public class ADM_Agentes extends javax.swing.JInternalFrame {
         });
 
         btn_Modificar.setText("Modificar");
+        btn_Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ModificarActionPerformed(evt);
+            }
+        });
 
         btn_Eliminar.setText("Eliminar");
+        btn_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -184,6 +195,7 @@ public class ADM_Agentes extends javax.swing.JInternalFrame {
         txt_ID.setText(String.valueOf(generar_extension()));
         txt_Nombre.setText("");
         cb_Departamento.setSelectedIndex(0);
+        btn_Agregar.setEnabled(true);
     }
     
     private void refrescar(ArrayList<agentes>datos){
@@ -209,24 +221,61 @@ public class ADM_Agentes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_CancelarActionPerformed
 
     public void extraer_Informacion(int x){
-        for(int i=0; i<model.getRowCount();i++){
-            if(model.getValueAt(i,0).equals(x)){
-                txt_ID.setText(String.valueOf(datos.get(i).getID_Agente()));
-                txt_Nombre.setText(datos.get(i).getNombre());
-                cb_Departamento.setSelectedItem(datos.get(i).getDepartamento());
-                break;
+        for(agentes ag : datos){
+            if(ag.getID_Agente()== x){
+               txt_ID.setText(String.valueOf(ag.getID_Agente()));
+               txt_Nombre.setText(ag.getNombre());
+               cb_Departamento.setSelectedItem(ag.getDepartamento());
+               break;
             }
         }
     }
     
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int x=this.jTable1.getSelectedRow();
-        int id=0;
-         if(x>=0){
-             id = (int) model.getValueAt(x, 0);
-         }
-         extraer_Informacion(id);
+        btn_Agregar.setEnabled(false);
+        int x = jTable1.getSelectedRow();
+    
+            if (x >= 0) {
+                int id = (int) model.getValueAt(x, 0);
+                extraer_Informacion(id);
+            }
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
+        
+        try {
+        int id = Integer.parseInt(txt_ID.getText().trim());
+        
+        for (int i = 0; i < datos.size(); i++) {
+            if (datos.get(i).getID_Agente() == id) {
+                datos.remove(i);
+                break;
+            }
+        }
+        
+            refrescar(datos);
+            limpiar();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID inválido", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_EliminarActionPerformed
+
+    private void btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarActionPerformed
+        int idBuscar=Integer.parseInt(txt_ID.getText());
+        for (int i = 0; i < datos.size(); i++) {
+            if (datos.get(i).getID_Agente() == idBuscar) {
+                agentes nuevo = new agentes();
+                nuevo.setID_Agente(idBuscar);
+                nuevo.setNombre(txt_Nombre.getText());
+                nuevo.setDepartamento(cb_Departamento.getSelectedItem().toString());
+
+                datos.set(i, nuevo);
+                break;
+            }
+        }
+        refrescar(datos);
+        limpiar();
+    }//GEN-LAST:event_btn_ModificarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
