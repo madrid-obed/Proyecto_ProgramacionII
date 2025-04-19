@@ -121,8 +121,10 @@ public class Panel_Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_llamadasActionPerformed
 
+    Telefono_Emisor forma1 = new Telefono_Emisor();
     private void btn_llamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_llamarActionPerformed
-        // TODO add your handling code here:
+        this.jDesktopPane1.add(forma1);
+        forma1.setVisible(true);
     }//GEN-LAST:event_btn_llamarActionPerformed
 
         /**
