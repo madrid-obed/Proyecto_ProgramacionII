@@ -3,27 +3,32 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
-
-/**
- *
- * @author Obed
- */
 public class ADM_Agentes extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form ADM_Agentes
-     */
+     private DefaultTableModel model;
+     private ArrayList<agentes> datos = new ArrayList<>();
+    
     public ADM_Agentes() {
         initComponents();
          model=(DefaultTableModel)this.jTable1.getModel();
          txt_ID.setText(String.valueOf(generar_extension()));
     } 
-    DefaultTableModel model;
-    ArrayList<agentes> datos = new ArrayList();
+    /*DefaultTableModel model;
+    ArrayList<agentes> datos = new ArrayList();*/
+    
+    public ArrayList<agentes> getAgentes() {
+        return new ArrayList<>(datos);
+    }
+    
+    public void incrementarLlamadasAgente(int idAgente) {
+        for(agentes ag : datos) {
+            if(ag.getID_Agente() == idAgente) {
+                ag.setLlamadas(ag.getLlamadas() + 1);
+                refrescar(datos);
+                break;
+            }
+        }
+    }
     
     boolean validar(int x){
         for(int i=0; i<datos.size();i++){
@@ -85,7 +90,7 @@ public class ADM_Agentes extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Extensión", "Nombre de Agente", "Departamento"
+                "Extensión", "Nombre de Agente", "Departamento", "Llamadas"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -202,7 +207,7 @@ public class ADM_Agentes extends javax.swing.JInternalFrame {
         model.setRowCount(0);
         for(int i=0;i<datos.size();i++){
             agentes x=datos.get(i);
-            model.addRow(new Object[]{x.ID_Agente,x.nombre,x.departamento});
+            model.addRow(new Object[]{x.ID_Agente,x.nombre,x.departamento, x.llamadas});
         }
     }
     private void btn_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarActionPerformed
@@ -210,6 +215,7 @@ public class ADM_Agentes extends javax.swing.JInternalFrame {
         agente.setID_Agente(Integer.parseInt(txt_ID.getText()));
         agente.setNombre(this.txt_Nombre.getText());
         agente.setDepartamento((String)this.cb_Departamento.getSelectedItem());
+        agente.setLlamadas(0);
         
         datos.add(agente);
         refrescar(datos);

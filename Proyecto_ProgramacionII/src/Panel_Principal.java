@@ -1,3 +1,6 @@
+
+import javax.swing.JInternalFrame;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -9,12 +12,15 @@
  */
 public class Panel_Principal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Panel_Principal
-     */
+    private ADM_Agentes formaAgentes;
+    private Telefono_Emisor formaTelefono;
+    
     public Panel_Principal() {
         initComponents();
         setExtendedState(6);
+        
+        formaAgentes = new ADM_Agentes();
+        formaTelefono = new Telefono_Emisor(formaAgentes, jDesktopPane1);
     }
 
     /**
@@ -111,20 +117,33 @@ public class Panel_Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    ADM_Agentes forma = new ADM_Agentes();
+    private void centrarInternalFrame(JInternalFrame frame) {
+    jDesktopPane1.add(frame);
+    frame.setVisible(true);
+    
+    int x = (jDesktopPane1.getWidth() - frame.getWidth()) / 2;
+    int y = (jDesktopPane1.getHeight() - frame.getHeight()) / 2;
+    frame.setLocation(x, y);
+    }
+    
+    //ADM_Agentes forma = new ADM_Agentes();
     private void btn_agentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agentesActionPerformed
-        this.jDesktopPane1.add(forma);
-        forma.setVisible(true);
+        if(formaAgentes.isClosed()) {
+            formaAgentes = new ADM_Agentes();
+        }
+        centrarInternalFrame(formaAgentes);
     }//GEN-LAST:event_btn_agentesActionPerformed
 
     private void btn_llamadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_llamadasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_llamadasActionPerformed
 
-    Telefono_Emisor forma1 = new Telefono_Emisor();
+    //Telefono_Emisor forma1 = new Telefono_Emisor();
     private void btn_llamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_llamarActionPerformed
-        this.jDesktopPane1.add(forma1);
-        forma1.setVisible(true);
+        if(formaTelefono.isClosed()) {
+            formaTelefono = new Telefono_Emisor(formaAgentes, jDesktopPane1);
+        }
+        centrarInternalFrame(formaTelefono);
     }//GEN-LAST:event_btn_llamarActionPerformed
 
         /**
