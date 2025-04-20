@@ -69,9 +69,12 @@ public class Panel_Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btn_llamar, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_agentes, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_llamadas, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_agentes, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_llamadas, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,7 +138,9 @@ public class Panel_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_agentesActionPerformed
 
     private void btn_llamadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_llamadasActionPerformed
-        // TODO add your handling code here:
+        jif_Llamadas llamadas = new jif_Llamadas();
+        this.jDesktopPane1.add(llamadas);
+        llamadas.setVisible(true);
     }//GEN-LAST:event_btn_llamadasActionPerformed
 
     //Telefono_Emisor forma1 = new Telefono_Emisor();
