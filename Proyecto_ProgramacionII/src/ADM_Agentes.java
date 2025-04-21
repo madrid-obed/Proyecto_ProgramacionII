@@ -17,19 +17,41 @@ public class ADM_Agentes extends javax.swing.JInternalFrame {
     ArrayList<agentes> datos = new ArrayList();*/
     
     public ArrayList<agentes> getAgentes() {
-        return new ArrayList<>(datos);
+        return datos;
+    }
+    
+    private void refrescar(ArrayList<agentes>datos){
+        
+        System.out.println("Refrescando tabla con los datos: " + datos);
+        model.setRowCount(0);
+        for(int i=0;i<datos.size();i++){
+            agentes x=datos.get(i);
+            model.addRow(new Object[]{x.ID_Agente,x.nombre,x.departamento, x.llamadas});
+        }
     }
     
     public void incrementarLlamadasAgente(int idAgente) {
         for(agentes ag : datos) {
             if(ag.getID_Agente() == idAgente) {
+                System.out.println("Antes de incrementar: " + ag.getLlamadas());  // Muestra el valor antes de sumar
                 ag.setLlamadas(ag.getLlamadas() + 1);
+                System.out.println("Después de incrementar: " + ag.getLlamadas());  // Muestra el valor después de sumar
                 refrescar(datos);
                 break;
             }
         }
     }
-    
+    public void restarLlamadasAgente(int idAgente) {
+        for(agentes ag : datos) {
+            if(ag.getID_Agente() == idAgente) {
+                System.out.println("Antes de restar: " + ag.getLlamadas());  // Muestra el valor antes de sumar
+                ag.setLlamadas(ag.getLlamadas() - 1);
+                System.out.println("Después de restar: " + ag.getLlamadas());  // Muestra el valor después de sumar
+                refrescar(datos);
+                break;
+            }
+        }
+    }
     boolean validar(int x){
         for(int i=0; i<datos.size();i++){
             if(datos.get(i).getID_Agente() == x){
@@ -202,14 +224,6 @@ public class ADM_Agentes extends javax.swing.JInternalFrame {
         cb_Departamento.setSelectedIndex(0);
         btn_Agregar.setEnabled(true);
     }
-    
-    private void refrescar(ArrayList<agentes>datos){
-        model.setRowCount(0);
-        for(int i=0;i<datos.size();i++){
-            agentes x=datos.get(i);
-            model.addRow(new Object[]{x.ID_Agente,x.nombre,x.departamento, x.llamadas});
-        }
-    }
     private void btn_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarActionPerformed
         agentes agente = new agentes();
         agente.setID_Agente(Integer.parseInt(txt_ID.getText()));
@@ -282,7 +296,6 @@ public class ADM_Agentes extends javax.swing.JInternalFrame {
         refrescar(datos);
         limpiar();
     }//GEN-LAST:event_btn_ModificarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Agregar;

@@ -1,12 +1,14 @@
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+
 public class Telefono_Emisor extends javax.swing.JInternalFrame {
 
     private Telefono_Receptor formaReceptor;
     private final ADM_Agentes formaAgentes;
+    private final Telefono_Emisor formaEmisor;
     private final javax.swing.JDesktopPane DS;
     ArrayList<llamadas> registro = new ArrayList<>();
     
@@ -14,10 +16,11 @@ public class Telefono_Emisor extends javax.swing.JInternalFrame {
         initComponents();
         this.formaAgentes = formaAgentes;
         this.DS = desktopPane;
+        this.formaEmisor=this;
     }
     
     public ArrayList<llamadas> getLlamadas() {
-        return new ArrayList<>(registro);
+        return registro;
     }
     
      /*public Telefono_Receptor forma;
@@ -25,19 +28,36 @@ public class Telefono_Emisor extends javax.swing.JInternalFrame {
      ArrayList<llamadas> registro = new ArrayList();
      ADM_Agentes formaAgentes;*/
      
+    public void mostrarExtension(String x){
+        pantalla.setText(x);
+    }
+    public int getExtensionActual(){
+        int extension = Integer.parseInt(pantalla.getText());
+        return extension;
+    }
+    
+    private void centrarInternalFrame(JInternalFrame frame) {
+    DS.add(frame);
+    frame.setVisible(true);
+    
+    int x = (DS.getWidth() - frame.getWidth()) / 2;
+    int y = (DS.getHeight() - frame.getHeight()) / 2;
+    frame.setLocation(x, y);
+    }
+    
     public void abrirLlamada(){
         if(formaReceptor==null || formaReceptor.isClosed()){
-            formaReceptor = new Telefono_Receptor();
-            DS.add(formaReceptor);
+            formaReceptor = new Telefono_Receptor(formaEmisor, formaAgentes, DS);
+            centrarInternalFrame(formaReceptor);
         }
         formaReceptor.setVisible(true);
     }
     
-    public int seleccionarAgente(ArrayList<agentes> lista) {
+    public int seleccionarAgente(ArrayList<agentes> lista, int idAnterior) {
     if (lista == null || lista.isEmpty()) {
         return -1;
     }
-    
+
     String departamentoSeleccionado;
 
     if (txt_Departamento.getText() == null || txt_Departamento.getText().trim().isEmpty()) {
@@ -48,36 +68,43 @@ public class Telefono_Emisor extends javax.swing.JInternalFrame {
         return -1;
     }
 
-departamentoSeleccionado = txt_Departamento.getText().trim();
-    
-    agentes minAgente = null;
-    boolean primerAgenteEncontrado = false;
+    departamentoSeleccionado = txt_Departamento.getText().trim();
+    formaReceptor.setDepartamento(departamentoSeleccionado);
+
+    ArrayList<agentes> candidatos = new ArrayList<>();
+
+    int minLlamadas = Integer.MAX_VALUE;
 
     for (agentes actual : lista) {
-        
         if (actual.departamento.equalsIgnoreCase(departamentoSeleccionado)) {
-            
-            if (!primerAgenteEncontrado) {
-                minAgente = actual;
-                primerAgenteEncontrado = true;
-            } 
-            
-            else if (actual.llamadas < minAgente.llamadas) {
-                minAgente = actual;
+            if (actual.llamadas < minLlamadas) {
+                candidatos.clear();
+                candidatos.add(actual);
+                minLlamadas = actual.llamadas;
+            } else if (actual.llamadas == minLlamadas) {
+                candidatos.add(actual);
             }
         }
     }
 
-    if (!primerAgenteEncontrado) {
+    if (candidatos.isEmpty()) {
         JOptionPane.showMessageDialog(this, 
             "No hay agentes disponibles en el departamento: " + departamentoSeleccionado, 
             "Advertencia", 
             JOptionPane.WARNING_MESSAGE);
         return -1;
     }
-
-    return minAgente.ID_Agente;
+    
+    for (agentes ag : candidatos) {
+        if (ag.ID_Agente != idAnterior) {
+            return ag.ID_Agente;
+        }
     }
+
+    
+    return candidatos.get(0).ID_Agente;
+}
+
 
     
     public int generarNumero(){
@@ -362,6 +389,11 @@ departamentoSeleccionado = txt_Departamento.getText().trim();
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    void limpiar(){
+        this.pantalla.setText("");
+        this.txt_Departamento.setText("");
+    }
+    
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         this.pantalla.setText(this.pantalla.getText()+"0");
@@ -404,11 +436,11 @@ departamentoSeleccionado = txt_Departamento.getText().trim();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        this.pantalla.setText("");
+        limpiar();
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        pantalla.setText("");
+        limpiar();
         formaReceptor.setVisible(false);
         this.dispose();
         JOptionPane.showMessageDialog(this, "Llamada Terminada", "", 1);
@@ -416,8 +448,9 @@ departamentoSeleccionado = txt_Departamento.getText().trim();
 
     
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-    
+
         abrirLlamada(); 
+        
         int opcion = Integer.parseInt(this.pantalla.getText());
         
         switch(opcion){
@@ -440,7 +473,7 @@ departamentoSeleccionado = txt_Departamento.getText().trim();
         }
         
         ArrayList<agentes> listaAgentes = formaAgentes.getAgentes();
-        int ID_Agente = seleccionarAgente(listaAgentes);
+        int ID_Agente = seleccionarAgente(listaAgentes, getExtensionActual());
             
         if (ID_Agente == -1) {
             JOptionPane.showMessageDialog(this, "No hay agentes disponibles.");
