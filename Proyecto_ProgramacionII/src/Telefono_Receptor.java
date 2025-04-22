@@ -517,31 +517,43 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
         this.departamentoSeleccionado = departamento;
     }
     
-    public int pasarLlamada(ArrayList<agentes> lista, int idAnterior) {
-    if (lista == null || lista.isEmpty()) {
-        return -1;
-    }
-    
-    ArrayList<agentes> filtrados = new ArrayList<>();
-    for (agentes ag : lista) {
-        if (ag.departamento.equalsIgnoreCase(departamentoSeleccionado)) {
-            filtrados.add(ag);
+    public int pasarLlamada(ArrayList<agentes> lista, int idAnterior, String departamentoSeleccionado) {
+        if (lista == null || lista.isEmpty()) {
+            return -1;
         }
+
+        ArrayList<agentes> filtrados = new ArrayList<>();
+        for (agentes ag : lista) {
+            if (ag.departamento.equalsIgnoreCase(departamentoSeleccionado)) {
+                filtrados.add(ag);
+            }
+        }
+
+        if (filtrados.isEmpty()) {
+            return -1;
+        }
+
+        filtrados.sort(Comparator.comparingInt(agentes::getLlamadas));
+
+        int indexInicio = 0;
+        for (int i = 0; i < filtrados.size(); i++) {
+            if (filtrados.get(i).ID_Agente == idAnterior) {
+                indexInicio = (i + 1) % filtrados.size();
+                break;
+            }
+        }
+
+        for (int i = 0; i < filtrados.size(); i++) {
+            int index = (indexInicio + i) % filtrados.size();
+            int candidatoID = filtrados.get(index).ID_Agente;
+            if (candidatoID != idAnterior) {
+                return candidatoID;
+            }
+        }
+
+        return -1;
     }
 
-    if (filtrados.isEmpty()) {
-        return -1;
-    }
-    
-    Collections.sort(filtrados, Comparator.comparingInt(agentes::getLlamadas));
-    
-    for (agentes ag : filtrados) {
-        if (ag.ID_Agente != idAnterior) {
-            return ag.ID_Agente;
-        }
-    }
-    return idAnterior;
-}
 
 
 
@@ -654,7 +666,7 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
         
         int idAnterior = formaEmisor.getExtensionActual();
     formaAgentes.restarLlamadasAgente(idAnterior);
-    int nuevaExtension = pasarLlamada(formaAgentes.getAgentes(), idAnterior);
+    int nuevaExtension = pasarLlamada(formaAgentes.getAgentes(), idAnterior, departamentoSeleccionado);
     formaEmisor.mostrarExtension(String.valueOf(nuevaExtension));
     formaAgentes.incrementarLlamadasAgente(nuevaExtension);
 

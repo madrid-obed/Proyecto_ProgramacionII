@@ -33,9 +33,9 @@ public class ADM_Agentes extends javax.swing.JInternalFrame {
     public void incrementarLlamadasAgente(int idAgente) {
         for(agentes ag : datos) {
             if(ag.getID_Agente() == idAgente) {
-                System.out.println("Antes de incrementar: " + ag.getLlamadas());  // Muestra el valor antes de sumar
+                //System.out.println("Antes de incrementar: " + ag.getLlamadas());
                 ag.setLlamadas(ag.getLlamadas() + 1);
-                System.out.println("Después de incrementar: " + ag.getLlamadas());  // Muestra el valor después de sumar
+                //System.out.println("Después de incrementar: " + ag.getLlamadas());
                 refrescar(datos);
                 break;
             }
@@ -44,9 +44,9 @@ public class ADM_Agentes extends javax.swing.JInternalFrame {
     public void restarLlamadasAgente(int idAgente) {
         for(agentes ag : datos) {
             if(ag.getID_Agente() == idAgente) {
-                System.out.println("Antes de restar: " + ag.getLlamadas());  // Muestra el valor antes de sumar
+                //System.out.println("Antes de restar: " + ag.getLlamadas());
                 ag.setLlamadas(ag.getLlamadas() - 1);
-                System.out.println("Después de restar: " + ag.getLlamadas());  // Muestra el valor después de sumar
+                //System.out.println("Después de restar: " + ag.getLlamadas());
                 refrescar(datos);
                 break;
             }
