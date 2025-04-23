@@ -14,6 +14,7 @@ public class Panel_Principal extends javax.swing.JFrame {
 
     private ADM_Agentes formaAgentes;
     private Telefono_Emisor formaTelefono;
+    private Telefono_Receptor formaTelefono2;
     
     public Panel_Principal() {
         initComponents();
@@ -21,6 +22,7 @@ public class Panel_Principal extends javax.swing.JFrame {
         
         formaAgentes = new ADM_Agentes();
         formaTelefono = new Telefono_Emisor(formaAgentes, jDesktopPane1);
+        formaTelefono2 = new Telefono_Receptor(formaTelefono, formaAgentes, jDesktopPane1);
     }
 
     /**
@@ -35,7 +37,9 @@ public class Panel_Principal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btn_agentes = new javax.swing.JButton();
         btn_llamadas = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         btn_llamar = new javax.swing.JButton();
+        btn_llamar1 = new javax.swing.JButton();
         jDesktopPane1 = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -54,12 +58,43 @@ public class Panel_Principal extends javax.swing.JFrame {
             }
         });
 
-        btn_llamar.setText("Llamar");
+        jPanel2.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btn_llamar.setText("Llamada Entrante");
         btn_llamar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_llamarActionPerformed(evt);
             }
         });
+
+        btn_llamar1.setText("Llamada Saliente");
+        btn_llamar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_llamar1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_llamar, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_llamar1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(btn_llamar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_llamar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -68,24 +103,22 @@ public class Panel_Principal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btn_llamar, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_agentes, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_llamadas, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_agentes, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_llamadas, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
                 .addComponent(btn_agentes, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_llamadas, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(133, 133, 133)
-                .addComponent(btn_llamar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(329, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jDesktopPane1.setBackground(new java.awt.Color(255, 255, 255));
@@ -95,11 +128,11 @@ public class Panel_Principal extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 605, Short.MAX_VALUE)
+            .addGap(0, 585, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 613, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,10 +164,10 @@ public class Panel_Principal extends javax.swing.JFrame {
     
     //ADM_Agentes forma = new ADM_Agentes();
     private void btn_agentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agentesActionPerformed
-        if(formaAgentes.isClosed()) {
+        if (formaAgentes == null || formaAgentes.isClosed()) {
             formaAgentes = new ADM_Agentes();
         }
-        centrarInternalFrame(formaAgentes);
+    centrarInternalFrame(formaAgentes);
     }//GEN-LAST:event_btn_agentesActionPerformed
 
     private void btn_llamadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_llamadasActionPerformed
@@ -148,8 +181,14 @@ public class Panel_Principal extends javax.swing.JFrame {
         if(formaTelefono.isClosed()) {
             formaTelefono = new Telefono_Emisor(formaAgentes, jDesktopPane1);
         }
-        centrarInternalFrame(formaTelefono);
+        jDesktopPane1.add(formaTelefono);
+        formaTelefono.setVisible(true);
+        //centrarInternalFrame(formaTelefono);
     }//GEN-LAST:event_btn_llamarActionPerformed
+
+    private void btn_llamar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_llamar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_llamar1ActionPerformed
 
         /**
      * @param args the command line arguments
@@ -188,7 +227,9 @@ public class Panel_Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_agentes;
     private javax.swing.JButton btn_llamadas;
     private javax.swing.JButton btn_llamar;
+    private javax.swing.JButton btn_llamar1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
