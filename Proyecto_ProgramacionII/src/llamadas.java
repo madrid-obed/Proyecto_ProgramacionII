@@ -12,8 +12,17 @@ import java.time.LocalDate;
 public class llamadas {
     int telefono;
     int ID_Agente;
+    String tipoLlamada;
     LocalDate fecha;
 
+    public String getTipoLlamada() {
+        return tipoLlamada;
+    }
+
+    public void setTipoLlamada(String tipoLlamada) {
+        this.tipoLlamada = tipoLlamada;
+    }
+    
     public int getTelefono() {
         return telefono;
     }

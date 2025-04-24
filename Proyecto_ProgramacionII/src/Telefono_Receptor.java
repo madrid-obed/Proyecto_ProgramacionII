@@ -1,14 +1,21 @@
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class Telefono_Receptor extends javax.swing.JInternalFrame {
     
-    private final Telefono_Emisor formaEmisor;
+    private Telefono_Emisor formaEmisor;
     private final ADM_Agentes formaAgentes;
+    public Transferir_Llamada formaTransferir;
+    public Telefono_Receptor formaReceptor=this;
+    private ArrayList<llamadas> registroLlamadas;
+    private ArrayList<agentes> listaAgentes;
     javax.swing.JDesktopPane DS;
     
     public Telefono_Receptor(Telefono_Emisor formaEmisor, ADM_Agentes formaAgentes, javax.swing.JDesktopPane desktopPane) {
@@ -16,9 +23,14 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
         this.DS = desktopPane;
         this.formaEmisor = formaEmisor;
         initComponents();
+        this.registroLlamadas=formaEmisor.getLlamadas();
+        this.listaAgentes = formaAgentes.getAgentes();
     }
     
-    
+    public void abrirLlamada(){
+        centrarInternalFrame(formaEmisor);
+        formaEmisor.setVisible(true);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -60,6 +72,8 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
         jButton26 = new javax.swing.JButton();
         jButton27 = new javax.swing.JButton();
         jButton28 = new javax.swing.JButton();
+        txtExtension = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -306,6 +320,7 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jButton11.setBackground(new java.awt.Color(102, 102, 102));
         jButton11.setText("0");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -328,7 +343,8 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
         jButton18.setBackground(new java.awt.Color(0, 204, 51));
         jButton18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton18.setForeground(new java.awt.Color(255, 255, 255));
-        jButton18.setText("Marcar");
+        jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/phone-call (3).png"))); // NOI18N
+        jButton18.setContentAreaFilled(false);
         jButton18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton18ActionPerformed(evt);
@@ -338,13 +354,15 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
         jButton19.setBackground(new java.awt.Color(204, 0, 51));
         jButton19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton19.setForeground(new java.awt.Color(255, 255, 255));
-        jButton19.setText("Colgar");
+        jButton19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/circle (1).png"))); // NOI18N
+        jButton19.setContentAreaFilled(false);
         jButton19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton19ActionPerformed(evt);
             }
         });
 
+        jButton12.setBackground(new java.awt.Color(102, 102, 102));
         jButton12.setText("8");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -352,6 +370,7 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton13.setBackground(new java.awt.Color(102, 102, 102));
         jButton13.setText("9");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -359,6 +378,7 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton20.setBackground(new java.awt.Color(102, 102, 102));
         jButton20.setText("7");
         jButton20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -366,6 +386,7 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton21.setBackground(new java.awt.Color(102, 102, 102));
         jButton21.setText("5");
         jButton21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -373,6 +394,7 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton22.setBackground(new java.awt.Color(102, 102, 102));
         jButton22.setText("6");
         jButton22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -380,6 +402,7 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton23.setBackground(new java.awt.Color(102, 102, 102));
         jButton23.setText("4");
         jButton23.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -387,6 +410,7 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton24.setBackground(new java.awt.Color(102, 102, 102));
         jButton24.setText("2");
         jButton24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -394,6 +418,7 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton25.setBackground(new java.awt.Color(102, 102, 102));
         jButton25.setText("3");
         jButton25.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -401,6 +426,7 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton26.setBackground(new java.awt.Color(102, 102, 102));
         jButton26.setText("1");
         jButton26.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -416,6 +442,16 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
         });
 
         jButton28.setText("Transferir");
+        jButton28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton28ActionPerformed(evt);
+            }
+        });
+
+        txtExtension.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setText("EXTENSIÓN:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -423,40 +459,45 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(txt_Numero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtExtension))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(txt_Numero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -466,11 +507,15 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtExtension)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton15, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
-                    .addComponent(txt_Numero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_Numero, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -495,22 +540,24 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 226, Short.MAX_VALUE)
+                    .addGap(0, 239, Short.MAX_VALUE)
                     .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 225, Short.MAX_VALUE)))
+                    .addGap(0, 238, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setExtensionReceptor(int extension){
+        txtExtension.setText(String.valueOf(extension));
+    }
     
     public void mostrarNumero(String numero){
         this.txt_Numero.setText(numero);
     }
-    
     
     String departamentoSeleccionado;
     public void setDepartamento(String departamento) {
@@ -547,6 +594,7 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
             int index = (indexInicio + i) % filtrados.size();
             int candidatoID = filtrados.get(index).ID_Agente;
             if (candidatoID != idAnterior) {
+                setExtensionReceptor(candidatoID);
                 return candidatoID;
             }
         }
@@ -554,8 +602,19 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
         return -1;
     }
 
-
-
+    public void bloquearBoton(){
+        jButton27.setEnabled(false);
+    }
+    
+    private void centrarInternalFrame(JInternalFrame frame) {
+    DS.add(frame);
+    frame.setVisible(true);
+    
+        int x = (DS.getWidth() - frame.getWidth()) / 2;
+        int y = (DS.getHeight() - frame.getHeight()) / 2;
+        frame.setLocation(x, y);
+        frame.toFront();
+    }
 
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -617,9 +676,18 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         this.pantalla.setText("");
         formaEmisor.limpiar();
-        formaEmisor.setVisible(false);
-        this.dispose();
-        JOptionPane.showMessageDialog(this, "Llamada Terminada", "", 1);
+        
+        if (formaReceptor != null && formaReceptor.isDisplayable()) {
+            formaReceptor.dispose();
+        }
+
+        if (formaEmisor != null && formaEmisor.isDisplayable()) {
+            formaEmisor.dispose();
+        } else {
+            this.dispose();
+        }
+
+JOptionPane.showMessageDialog(null, "Llamada Terminada", "", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
@@ -659,19 +727,50 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton26ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        // TODO add your handling code here:
+        int extension = Integer.parseInt(txtExtension.getText());
+
+    for (agentes ag : listaAgentes) {
+        if (ag.getID_Agente() == extension) {
+            formaEmisor.setPantalla(extension, ag.getDepartamento());
+            break;
+        }
+    }
+
+    formaEmisor.bloquearMarcar();
+
+    SwingUtilities.invokeLater(() -> {
+        abrirLlamada();
+    });
+    
+    LocalDate hoy = LocalDate.now();
+    llamadas llamada = new llamadas();
+    llamada.setID_Agente(extension);
+    llamada.setTelefono(Integer.parseInt(txt_Numero.getText()));
+    llamada.setTipoLlamada("saliente");
+    llamada.setFecha(hoy);
+
+    registroLlamadas.add(llamada);
+
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
         
         int idAnterior = formaEmisor.getExtensionActual();
-    formaAgentes.restarLlamadasAgente(idAnterior);
-    int nuevaExtension = pasarLlamada(formaAgentes.getAgentes(), idAnterior, departamentoSeleccionado);
-    formaEmisor.mostrarExtension(String.valueOf(nuevaExtension));
-    formaAgentes.incrementarLlamadasAgente(nuevaExtension);
+        formaAgentes.restarLlamadasAgente(idAnterior);
+        int nuevaExtension = pasarLlamada(formaAgentes.getAgentes(), idAnterior, departamentoSeleccionado);
+        formaEmisor.mostrarExtension(String.valueOf(nuevaExtension));
+        formaAgentes.incrementarLlamadasAgente(nuevaExtension);
 
     
     }//GEN-LAST:event_jButton27ActionPerformed
+
+    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
+        if(formaTransferir==null || formaTransferir.isClosed()){
+            formaTransferir = new Transferir_Llamada(formaEmisor,formaAgentes,formaReceptor);
+            centrarInternalFrame(formaTransferir);
+        }
+        formaTransferir.setVisible(true);
+    }//GEN-LAST:event_jButton28ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -707,10 +806,12 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel pantalla;
     private javax.swing.JLabel pantalla1;
+    private javax.swing.JLabel txtExtension;
     private javax.swing.JLabel txt_Numero;
     // End of variables declaration//GEN-END:variables
 }
