@@ -45,6 +45,10 @@ public class jif_Llamadas extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         Buscar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"8753", "Mauricio Dias", "04/01/2025 14:02:56", "04/01/2025 15:02:56", "1 H"},
