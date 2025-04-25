@@ -17,6 +17,15 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
     private ArrayList<llamadas> registroLlamadas;
     private ArrayList<agentes> listaAgentes;
     javax.swing.JDesktopPane DS;
+    private llamadas llamadaActual;
+    
+    public void registrarLlamadaSaliente(int idAgente, int numero) {
+        llamadaActual = new llamadas();
+        llamadaActual.setID_Agente(idAgente);
+        llamadaActual.setTelefono(numero);
+        llamadaActual.setTipoLlamada("Saliente");
+        llamadaActual.setFechaInicio(java.time.LocalDateTime.now());
+    }
     
     public Telefono_Receptor(Telefono_Emisor formaEmisor, ADM_Agentes formaAgentes, javax.swing.JDesktopPane desktopPane) {
         this.formaAgentes = formaAgentes;
@@ -662,7 +671,21 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        txt_Numero.setText("");
+        //txt_Numero.setText("");
+        
+        if (llamadaActual != null) 
+        {
+            llamadaActual.setFechaFin(java.time.LocalDateTime.now());
+
+            if (formaEmisor != null) {
+                formaEmisor.getLlamadas().add(llamadaActual);
+            }
+            formaAgentes.incrementarLlamadasAgente(llamadaActual.getID_Agente());
+        }
+
+        this.dispose();
+        javax.swing.JOptionPane.showMessageDialog(this, "Llamada finalizada por el receptor.");
+        
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
@@ -687,7 +710,23 @@ public class Telefono_Receptor extends javax.swing.JInternalFrame {
             this.dispose();
         }
 
-JOptionPane.showMessageDialog(null, "Llamada Terminada", "", JOptionPane.INFORMATION_MESSAGE);
+        
+        if (llamadaActual != null) 
+        {
+            llamadaActual.setFechaFin(java.time.LocalDateTime.now());
+
+            if (formaEmisor != null) {
+                formaEmisor.getLlamadas().add(llamadaActual);
+            }
+            formaAgentes.incrementarLlamadasAgente(llamadaActual.getID_Agente());
+        }
+
+        this.dispose();
+        javax.swing.JOptionPane.showMessageDialog(this, "Llamada finalizada por el receptor.");
+        
+        
+        
+        JOptionPane.showMessageDialog(null, "Llamada Terminada", "", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed

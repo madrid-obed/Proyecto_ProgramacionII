@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JInternalFrame;
@@ -11,6 +12,7 @@ public class Telefono_Emisor extends javax.swing.JInternalFrame {
     private final Telefono_Emisor formaEmisor;
     private final javax.swing.JDesktopPane DS;
     ArrayList<llamadas> registro = new ArrayList<>();
+    private llamadas llamadaActual;
     
     public Telefono_Emisor(ADM_Agentes formaAgentes, javax.swing.JDesktopPane desktopPane) {
         initComponents();
@@ -23,6 +25,24 @@ public class Telefono_Emisor extends javax.swing.JInternalFrame {
         return registro;
     }
     
+    
+    public void iniciarLlamada(int telefono, int idAgente, String tipo) {
+        llamadaActual = new llamadas();
+        llamadaActual.setTelefono(telefono);
+        llamadaActual.setID_Agente(idAgente);
+        llamadaActual.setTipoLlamada(tipo);
+        llamadaActual.setFechaInicio(LocalDateTime.now());
+    }
+    
+    public void finalizarLlamada() {
+        if (llamadaActual != null) {
+            llamadaActual.setFechaFin(LocalDateTime.now());
+            registro.add(llamadaActual);
+            formaAgentes.incrementarLlamadasAgente(llamadaActual.getID_Agente());
+            llamadaActual = null;
+            JOptionPane.showMessageDialog(this, "Llamada registrada exitosamente.");
+        }
+    }
      /*public Telefono_Receptor forma;
      public javax.swing.JDesktopPane DS;
      ArrayList<llamadas> registro = new ArrayList();
@@ -473,6 +493,9 @@ public class Telefono_Emisor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+        
+        finalizarLlamada();
+
         limpiar();
 
         if (formaReceptor != null && formaReceptor.isDisplayable()) {
@@ -485,7 +508,7 @@ public class Telefono_Emisor extends javax.swing.JInternalFrame {
             this.dispose();
         }
 
-JOptionPane.showMessageDialog(null, "Llamada Terminada", "", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Llamada Terminada", "", JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_jButton17ActionPerformed
 
@@ -493,9 +516,9 @@ JOptionPane.showMessageDialog(null, "Llamada Terminada", "", JOptionPane.INFORMA
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
 
         abrirLlamada(); 
-        
+
         int opcion = Integer.parseInt(this.pantalla.getText());
-        
+
         switch(opcion){
             case 1:
                 txt_Departamento.setText("Atencion al cliente");
@@ -509,34 +532,25 @@ JOptionPane.showMessageDialog(null, "Llamada Terminada", "", JOptionPane.INFORMA
             case 4:
                 txt_Departamento.setText("Ventas");
                 break;
-                
             default:
                 JOptionPane.showMessageDialog(this, "Opcion no válida, seleccione nuevamente");
-                break;
+                return;
         }
-        
+
         ArrayList<agentes> listaAgentes = formaAgentes.getAgentes();
         int ID_Agente = seleccionarAgente(listaAgentes, getExtensionActual());
-            
+
         if (ID_Agente == -1) {
             JOptionPane.showMessageDialog(this, "No hay agentes disponibles.");
             formaReceptor.setVisible(false);
-        return;
+            return;
         }
-    
+
         this.pantalla.setText(String.valueOf(ID_Agente));
         int numero = generarNumero();
-        LocalDate hoy = LocalDate.now();
-    
-        formaAgentes.incrementarLlamadasAgente(ID_Agente);
-    
-        llamadas llamada = new llamadas();
-        llamada.setID_Agente(ID_Agente);
-        llamada.setTelefono(numero);
-        llamada.setTipoLlamada("entrante");
-        llamada.setFecha(hoy);
-        
-        registro.add(llamada);
+
+        iniciarLlamada(numero, ID_Agente, "Entrante"); // ⬅️ AHORA se registra correctamente
+
         formaReceptor.setExtensionReceptor(ID_Agente);
         formaReceptor.mostrarNumero(String.valueOf(numero));
     }//GEN-LAST:event_jButton16ActionPerformed

@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -19,6 +20,13 @@ public final class Llamada_Saliente extends javax.swing.JInternalFrame {
     private ArrayList<agentes> listaAgentes;
     javax.swing.JDesktopPane DS;
     
+    private llamadas llamadaActual;
+    private ArrayList<llamadas> registro = new ArrayList<>();
+    
+    public ArrayList<llamadas> getLlamadas() {
+        return registro;
+    }
+    
     public Llamada_Saliente(Telefono_Emisor formaEmisor, Telefono_Receptor formaReceptor, ADM_Agentes formaAgentes, javax.swing.JDesktopPane desktopPane) {
         this.formaEmisor = formaEmisor;
         this.formaReceptor = formaReceptor;
@@ -30,6 +38,26 @@ public final class Llamada_Saliente extends javax.swing.JInternalFrame {
         this.listaAgentes = formaAgentes.getAgentes();
         llenarComboBoxExtensiones(listaAgentes);
     }
+    
+    public void iniciarLlamada(int telefono, int idAgente, String tipo) {
+        llamadaActual = new llamadas();
+        llamadaActual.setTelefono(telefono);
+        llamadaActual.setID_Agente(idAgente);
+        llamadaActual.setTipoLlamada(tipo);
+        llamadaActual.setFechaInicio(java.time.LocalDateTime.now());
+        JOptionPane.showMessageDialog(this, "Tipo de llamada: " + tipo);
+    }
+
+    public void finalizarLlamada() {
+        if (llamadaActual != null) {
+            llamadaActual.setFechaFin(java.time.LocalDateTime.now());
+            registro.add(llamadaActual);
+            llamadaActual = null;
+        }
+    }
+    
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -47,7 +47,6 @@ public class Panel_Principal extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         btn_agentes = new javax.swing.JButton();
         btn_llamadas = new javax.swing.JButton();
-        btn_llamadas1 = new javax.swing.JButton();
         imagen2 = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
 
@@ -139,13 +138,6 @@ public class Panel_Principal extends javax.swing.JFrame {
             }
         });
 
-        btn_llamadas1.setText("Ver llamadas salientes");
-        btn_llamadas1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_llamadas1ActionPerformed(evt);
-            }
-        });
-
         imagen2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/settings (1).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -153,9 +145,8 @@ public class Panel_Principal extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(57, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btn_llamadas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_llamadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_agentes, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -172,9 +163,7 @@ public class Panel_Principal extends javax.swing.JFrame {
                 .addComponent(btn_agentes, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_llamadas, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_llamadas1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -206,7 +195,7 @@ public class Panel_Principal extends javax.swing.JFrame {
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 613, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -241,8 +230,12 @@ public class Panel_Principal extends javax.swing.JFrame {
         centrarInternalFrame(formaAgentes);
     }//GEN-LAST:event_btn_agentesActionPerformed
 
-    jif_Llamadas llamadas = new jif_Llamadas();
+    //jif_Llamadas llamadas = new jif_Llamadas(formaTelefono.getLlamadas(), formaAgentes.getAgentes());
     private void btn_llamadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_llamadasActionPerformed
+        if (formaTelefono == null) {
+            formaTelefono = new Telefono_Emisor(formaAgentes, jDesktopPane1);
+        }
+        jif_Llamadas llamadas = new jif_Llamadas(formaTelefono.getLlamadas(), formaAgentes.getAgentes());
         this.jDesktopPane1.add(llamadas);
         llamadas.setVisible(true);
     }//GEN-LAST:event_btn_llamadasActionPerformed
@@ -264,10 +257,6 @@ public class Panel_Principal extends javax.swing.JFrame {
         centrarInternalFrame(formaSaliente);
         formaSaliente.setVisible(true);
     }//GEN-LAST:event_btn_llamar1ActionPerformed
-
-    private void btn_llamadas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_llamadas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_llamadas1ActionPerformed
 
         /**
      * @param args the command line arguments
@@ -305,7 +294,6 @@ public class Panel_Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agentes;
     private javax.swing.JButton btn_llamadas;
-    private javax.swing.JButton btn_llamadas1;
     private javax.swing.JButton btn_llamar;
     private javax.swing.JButton btn_llamar1;
     private javax.swing.JLabel imagen2;
